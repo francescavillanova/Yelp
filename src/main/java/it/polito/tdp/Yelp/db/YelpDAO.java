@@ -25,7 +25,7 @@ public class YelpDAO {
 			
 			while(res.next()) {
 				result.add(new Business(
-						res.getString("business_id"),
+						res.getString("business_id"),  //nome della colonna della tabella
 						res.getString("full_address"),
 						res.getString("active"),
 						res.getString("categories"),
@@ -49,6 +49,11 @@ public class YelpDAO {
 		}
 	}
 	
+	/**
+	 * dato un busines restituisce il voto medio delle sue recensioni
+	 * @param business
+	 * @return
+	 */
 	public double averageStars(Business business) {
 		String sql = "SELECT AVG(stars) AS avg_stars, COUNT(*) AS number "
 				+ "FROM reviews "
@@ -60,7 +65,7 @@ public class YelpDAO {
 			ResultSet res = st.executeQuery();
 			res.first();
 			double stars = res.getDouble("avg_stars") ;
-			conn.close();
+			conn.close();  //se non la chiudo mi dà errore di connessione al DB perchè ci sono troppe connessioni
 			return stars ;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
